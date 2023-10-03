@@ -524,22 +524,69 @@ G2L["28"].Transparency = 0
 G2L["29"].Name = [[UICorner]]
 G2L["29"].CornerRadius = UDim.new(0, 2)
 
---[[
-    Scripts
---]]
--- Require G2L wrapper
-local G2L_REQUIRE = require;
-local G2L_MODULES = {};
-local function require(Module:ModuleScript)
-    local ModuleState = G2L_MODULES[Module];
-    if ModuleState then
-        if not ModuleState.Required then
-            ModuleState.Required = true;
-            ModuleState.Value = ModuleState.Closure();
-        end
-        return ModuleState.Value;
-    end;
-    return G2L_REQUIRE(Module);
+local function MOQC_fake_script() -- HackFrame.RGB_Script 
+	local script = Instance.new('LocalScript', G2L["28"])
+	
+	while wait() do
+		script.Parent.Color = Color3.new(255/255,0/255,0/255)
+		for i = 0,255,10 do
+			wait()
+			script.Parent.Color = Color3.new(255/255,i/255,0/255)
+		end
+		for i = 255,0,-10 do
+			wait()
+			script.Parent.Color = Color3.new(i/255,255/255,0/255)
+		end
+		for i = 0,255,10 do
+			wait()
+			script.Parent.Color = Color3.new(0/255,255/255,i/255)
+		end
+		for i = 255,0,-10 do
+			wait()
+			script.Parent.Color = Color3.new(0/255,i/255,255/255)
+		end
+		for i = 0,255,10 do
+			wait()
+			script.Parent.Color = Color3.new(i/255,0/255,255/255)
+		end
+		for i = 255,0,-10 do
+			wait()
+			script.Parent.Color = Color3.new(255/255,0/255,i/255)
+		end
+	end
 end
+coroutine.wrap(MOQC_fake_script)()
 
-return G2L["0"], require;
+
+local function MOQC_fake_script() -- HackFrame.RGB_Script 
+	local script = Instance.new('LocalScript', G2L["4"])
+	
+	while wait() do
+		script.Parent.Color = Color3.new(255/255,0/255,0/255)
+		for i = 0,255,10 do
+			wait()
+			script.Parent.Color = Color3.new(255/255,i/255,0/255)
+		end
+		for i = 255,0,-10 do
+			wait()
+			script.Parent.Color = Color3.new(i/255,255/255,0/255)
+		end
+		for i = 0,255,10 do
+			wait()
+			script.Parent.Color = Color3.new(0/255,255/255,i/255)
+		end
+		for i = 255,0,-10 do
+			wait()
+			script.Parent.Color = Color3.new(0/255,i/255,255/255)
+		end
+		for i = 0,255,10 do
+			wait()
+			script.Parent.Color = Color3.new(i/255,0/255,255/255)
+		end
+		for i = 255,0,-10 do
+			wait()
+			script.Parent.Color = Color3.new(255/255,0/255,i/255)
+		end
+	end
+end
+coroutine.wrap(MOQC_fake_script)()
