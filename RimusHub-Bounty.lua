@@ -1,3 +1,4 @@
+-- Because this is a beta version, there are still many errors, so if you have any suggestions, please go to our discord
 getgenv().Config = {
     ["Hunt"] = {
         ["Team"] = "Pirates",
