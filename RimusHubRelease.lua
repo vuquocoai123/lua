@@ -1,4 +1,4 @@
-getgenv().Setting = {
+getgenv().Config = {
     ["Hunt"] = {
         ["Team"] = "Pirates",
         ["Min"] = 0,
@@ -81,7 +81,7 @@ repeat task.wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("Main
 if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
     repeat wait()
         if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main").ChooseTeam.Visible == true then
-            if getgenv().Setting.Hunt.Team == "Marines" then
+            if getgenv().Setting.Team == "Marines" then
                 for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Marines.Frame.ViewportFrame.TextButton.Activated)) do
                     v.Function()
                 end
@@ -204,10 +204,9 @@ function bypass(Pos)
                         lp.Character.Head:Destroy()
                         wait(1)
                         repeat task.wait()
-                            lp.Character.HumanoidRootPart.CFrame = is  
                             lp.Character.PrimaryPart.CFrame = is  
                         until lp.Character:FindFirstChild("Humanoid").Health > 0
-                        wait(0.5)
+                        task.wait(0.5)
                     end 
                 end
             end
@@ -270,7 +269,7 @@ function Ken()
     end
 end
 --- Sent Key To Cilent ---
-function down(use)
+function down(use,l)
     pcall(function()
         game:GetService("VirtualInputManager"):SendKeyEvent(true,use,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
         task.wait(l)
@@ -313,7 +312,7 @@ spawn(function()
     end
 end)
 --- Boots FPS ---
-if getgenv().Setting.Another.FPSBoots then
+if getgenv().Config.Another.FPSBoots then
     local removedecals = false
     local g = game
     local w = g.Workspace
@@ -378,7 +377,7 @@ if getgenv().Setting.Another.FPSBoots then
     InvisibleObject()
 end
 --- White Screen ---
-if getgenv().Setting.Another.WhiteScreen then
+if getgenv().Config.Another.WhiteScreen then
     game.RunService:Set3dRenderingEnabled(false)
 end	
 --- Check Fruit
@@ -391,7 +390,7 @@ function hasValue(array, targetString)
     return false
 end
 --- Fast Attack
-if getgenv().Setting.Click.FastClick then
+if getgenv().Config.Click.FastClick then
     local CameraShaker = require(game.ReplicatedStorage.Util.CameraShaker)
     CameraShaker:Stop()
     fastattack = true
@@ -579,7 +578,7 @@ spawn(function()
         end)
     end
 end)
-gunmethod = getgenv().Setting.Gun.NewGunMode
+gunmethod = getgenv().Config.Gun.NewGunMode
 local melee, gun, sword, fruit
 spawn(function()
     while task.wait() do
@@ -587,21 +586,21 @@ spawn(function()
             if getgenv().targ.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 if (getgenv().targ.Character:WaitForChild("HumanoidRootPart").CFrame.Position - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.Position).Magnitude < 40 then 
                     if not gunmethod then
-                        if getgenv().Setting.Melee.Enable then
+                        if getgenv().Config.Melee.Enable then
                             getgenv().weapon = "Melee"
-                            wait(getgenv().Setting.Melee.Delay)
+                            wait(getgenv().Config.Melee.Delay)
                         end
-                        if getgenv().Setting.Fruit.Enable then
+                        if getgenv().Config.Fruit.Enable then
                             getgenv().weapon = "Blox Fruit"
-                            wait(getgenv().Setting.Fruit.Delay)
+                            wait(getgenv().Config.Fruit.Delay)
                         end
-                        if getgenv().Setting.Sword.Enable then
+                        if getgenv().Config.Sword.Enable then
                             getgenv().weapon = "Sword"
-                            wait(getgenv().Setting.Sword.Delay)
+                            wait(getgenv().Config.Sword.Delay)
                         end
-                        if getgenv().Setting.Gun.Enable then
+                        if getgenv().Config.Gun.Enable then
                             getgenv().weapon = "Gun"
-                            wait(getgenv().Setting.Gun.Delay)
+                            wait(getgenv().Config.Gun.Delay)
                         end
                     else
                         for i, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
@@ -625,13 +624,15 @@ spawn(function()
             end
             if getgenv().targ ~= nil and getgenv().targ.Character and (getgenv().targ.Character.HumanoidRootPart.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude < 50 then
                 buso()
-                if getgenv().Setting.Another.V3 then
-                    if getgenv().Setting.Another.CustomHealth and lp.Character.Humanoid.Health <= getgenv().Setting.Another.Health then
-                        down("T",0.1)
+                if getgenv().Config.Another.V3 then
+                    if getgenv().Config.Another.CustomHealth and lp.Character.Humanoid.Health <= getgenv().Config.Another.Health then
+                        l = 0.1
+                        down("T")
                     end
                 end
-                if getgenv().Setting.Another.V4 then
-                    down("Y",0.1)
+                if getgenv().Config.Another.V4 then
+                    l = 0.1
+                    down("Y")
                 end   
             end
         end)
@@ -752,7 +753,7 @@ spawn(function()
         if getgenv().targ == nil then hopserver = true end 
         pcall(function()
             if getgenv().targ.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid").Health > getgenv().Setting.SafeHealth.Health then
+                if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid").Health > getgenv().Config.SafeHealth.Health then
                     pcall(function()    
                         if not (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") and getgenv().targ:DistanceFromCharacter(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").Position) < 10000) then
                             if (getgenv().targ.Character:WaitForChild("HumanoidRootPart").CFrame.Position - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.Position).Magnitude < 40 then 
@@ -761,7 +762,7 @@ spawn(function()
                                     SkipPlayer()
                                 end
                                 if getgenv().targ.Character.Humanoid.Health > 0 then
-                                    if getgenv().Setting.Click.AlwaysClick then
+                                    if getgenv().Config.Click.AlwaysClick then
                                         Click()
                                     end
                                     if helloae then
@@ -792,14 +793,14 @@ spawn(function()
                     if a ~= b then
                         yTween = 0
                         b = a
-                        if (getgenv().Setting.Gun.Enable and getgenv().Setting.Gun.GunMode) then
+                        if (getgenv().Config.Gun.Enable and getgenv().Config.Gun.GunMode) then
                             Nguvc = -14
                         else
                             Nguvc = -15
                         end
                     else
                         yTween = 5
-                        if (getgenv().Setting.Gun.Enable and getgenv().Setting.Gun.GunMode) then
+                        if (getgenv().Config.Gun.Enable and getgenv().Config.Gun.GunMode) then
                             Nguvc = 3
                         else
                             Nguvc = 5
@@ -823,7 +824,7 @@ spawn(function()
     while task.wait() do 
         if getgenv().targ ~= nil and (getgenv().targ.Character:WaitForChild("HumanoidRootPart").CFrame.Position - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.Position).Magnitude < 40 then 
             aim = true 
-            if (getgenv().Setting.Gun.Enable and getgenv().Setting.Gun.GunMode) then
+            if (getgenv().Config.Gun.Enable and getgenv().Config.Gun.GunMode) then
                 CFrameHunt = CFrame.new(getgenv().targ.Character.HumanoidRootPart.Position + getgenv().targ.Character.HumanoidRootPart.CFrame.LookVector * 2, getgenv().targ.Character.HumanoidRootPart.Position)
             else
                 CFrameHunt = CFrame.new(getgenv().targ.Character.HumanoidRootPart.Position + getgenv().targ.Character.HumanoidRootPart.CFrame.LookVector * 5, getgenv().targ.Character.HumanoidRootPart.Position)
@@ -867,7 +868,7 @@ Mouse.Button1Down:Connect(function()
 end)
 spawn(function()
     while task.wait() do
-        if getgenv().Setting.Another.LockCamera then
+        if getgenv().Config.Another.LockCamera then
             local targetPlayer = getgenv().targ
             if targetPlayer ~= nil then
                 local targetCharacter = targetPlayer.Character
@@ -885,12 +886,12 @@ end)
 --  Rejoin
 game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child)
     if not hopserver and child.Name == 'ErrorPrompt' and child:FindFirstChild('MessageArea') and child.MessageArea:FindFirstChild("ErrorFrame") then
-        print("Rimus Hub Auto Bounty | Rejoin!")
+        print("MTriet Hub Auto Bounty | Rejoin!")
         game:GetService("TeleportService"):Teleport(game.PlaceId)
     end
 end)
 --- Webhook
-Urlsent = getgenv().Setting.Hunt.Url
+Urlsent = getgenv().Config.Hunt.Url
 function wSend(main)
     spawn(function()
         local Data = game:GetService("HttpService"):JSONEncode(main)
@@ -902,12 +903,12 @@ function wSend(main)
     end)
 end 
 function wEarn(targ, earn,total) 
-    if getgenv().Setting.Hunt.Webhook and getgenv().killed ~= nil then
+    if getgenv().Config.Hunt.Webhook and getgenv().killed ~= nil then
         local data = {
             ["content"] = "",
             ["embeds"] = {
                 {
-                    ["title"] = "**Rimus Hub | Auto Bounty**",
+                    ["title"] = "**Auto Bounty**",
                     ["color"] = 00000,
                     ["fields"] = {
                         {
@@ -921,7 +922,7 @@ function wEarn(targ, earn,total)
                             ["inline"] = false,
                         },
                         {
-                            ["name"] = "Server Bounty Count: ",
+                            ["name"] = "Earned From Target: ",
                             ["value"] = "```Earned: "..earn.."```",
                             ["inline"] = false,
                         },
@@ -951,7 +952,7 @@ function wEarn(targ, earn,total)
 end
 --- Counter
 --- Load & Save Setting
-local foldername = "Rimus Hub Auto Bounty"
+local foldername = "Mtriet Hub Auto Bounty"
 local filename = foldername.."/Settings.json"
 function saveSettings()
     local HttpService = game:GetService("HttpService")
@@ -976,6 +977,16 @@ function loadSettings()
         end
     end
 end
+_G.TotalEarn = 0
+_G.Time = 0
+loadSettings()
+Bounty = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value
+Cac = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value
+Earned = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value - Bounty
+Earned2 = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value - Bounty
+startTime = tick() - _G.Time
+OldTotalEarned = _G.TotalEarn 
+TotalEarned = _G.TotalEarn 
 --- Gui
 RimusScreen = Instance.new("ScreenGui");
 DropShadowHolder = Instance.new("Frame");
@@ -1377,15 +1388,6 @@ NameHub.Size = UDim2.new(0, 246, 0, 20)
 NameHub.Name = "NameHub"
 NameHub.Parent = Top
 --- Gui Function
-_G.TotalEarn = 0
-_G.Time = 0
-loadSettings()
-Bounty = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value
-Earned = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value - Bounty
-Earned2 = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value - Bounty
-startTime = tick() - _G.Time
-OldTotalEarned = _G.TotalEarn 
-TotalEarned = _G.TotalEarn 
 function GetElapsedTime(startTime)
     local elapsedTime = tick() - startTime
     local hours = math.floor(elapsedTime / 3600)
@@ -1395,72 +1397,7 @@ function GetElapsedTime(startTime)
     local formattedTime = string.format("%02d:%02d:%02d", hours, minutes, seconds)
     return formattedTime
 end
-local UserInputService = game:GetService("UserInputService")
-local UserInputService = game:GetService("UserInputService")
-local VirtualInputManager = game:GetService("VirtualInputManager")
-local TweenService = game:GetService("TweenService")
-local tween = game:service"TweenService"
-local RunService = game:GetService("RunService")
-local LocalPlayer = game:GetService("Players").LocalPlayer
-local Mouse = LocalPlayer:GetMouse()
-local GuiService = game:GetService("GuiService")
-function MakeDraggable(topbarobject, object)
-    local Dragging = nil
-    local DragInput = nil
-    local DragStart = nil
-    local StartPosition = nil
-
-    local function Update(input)
-        local Delta = input.Position - DragStart
-        local pos =
-            UDim2.new(
-                StartPosition.X.Scale,
-                StartPosition.X.Offset + Delta.X,
-                StartPosition.Y.Scale,
-                StartPosition.Y.Offset + Delta.Y
-            )
-        local Tween = TweenService:Create(object, TweenInfo.new(0.2), {Position = pos})
-        Tween:Play()
-    end
-
-    topbarobject.InputBegan:Connect(
-        function(input)
-            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-                Dragging = true
-                DragStart = input.Position
-                StartPosition = object.Position
-
-                input.Changed:Connect(
-                    function()
-                        if input.UserInputState == Enum.UserInputState.End then
-                            Dragging = false
-                        end
-                    end
-                )
-            end
-        end
-    )
-
-    topbarobject.InputChanged:Connect(
-        function(input)
-            if
-                input.UserInputType == Enum.UserInputType.MouseMovement or
-                input.UserInputType == Enum.UserInputType.Touch
-            then
-                DragInput = input
-            end
-        end
-    )
-
-    UserInputService.InputChanged:Connect(
-        function(input)
-            if input == DragInput and Dragging then
-                Update(input)
-            end
-        end
-    )
-end
-MakeDraggable(DropShadowHolder,DropShadowHolder)
+DropShadowHolder.Draggable = true
 DisButton.MouseButton1Down:Connect(function()
     setclipboard("https://discord.gg/ugF7s4GZ53")
 end)
@@ -1480,12 +1417,15 @@ spawn(function()
         Earned = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value - Bounty
         if Earned ~= Earned2 then
             TotalEarned = OldTotalEarned + Earned
+            Cac2 = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value - Cac
+            wait(0.1)
+            Cac = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value
             Earned2 = Earned
             saveSettings()
-            wEarn(getgenv().killed, Earned,TotalEarned)  
+            wEarn(getgenv().killed, Cac2,TotalEarned)  
         end
-        EarnedNumber.Text = tostring(Earned)
-        TotalEarnedNumber.Text = tostring(TotalEarned)
+        EarnedNumber.Text = Earned
+        TotalEarnedNumber.Text = TotalEarned
         CurrentBountyNumber.Text = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value
         _G.TotalEarn = TotalEarned 
     end
