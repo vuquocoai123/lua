@@ -1,4 +1,4 @@
-getgenv().Config = {
+getgenv().Setting = {
     ["Hunt"] = {
         ["Team"] = "Pirates",
         ["Min"] = 0,
@@ -81,7 +81,7 @@ repeat task.wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("Main
 if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
     repeat wait()
         if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main").ChooseTeam.Visible == true then
-            if getgenv().Setting.Team == "Marines" then
+            if getgenv().Setting.Hunt.Team == "Marines" then
                 for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Marines.Frame.ViewportFrame.TextButton.Activated)) do
                     v.Function()
                 end
@@ -204,9 +204,10 @@ function bypass(Pos)
                         lp.Character.Head:Destroy()
                         wait(1)
                         repeat task.wait()
+                            lp.Character.HumanoidRootPart.CFrame = is  
                             lp.Character.PrimaryPart.CFrame = is  
                         until lp.Character:FindFirstChild("Humanoid").Health > 0
-                        task.wait(0.5)
+                        wait(0.5)
                     end 
                 end
             end
@@ -312,7 +313,7 @@ spawn(function()
     end
 end)
 --- Boots FPS ---
-if getgenv().Config.Another.FPSBoots then
+if getgenv().Setting.Another.FPSBoots then
     local removedecals = false
     local g = game
     local w = g.Workspace
@@ -377,7 +378,7 @@ if getgenv().Config.Another.FPSBoots then
     InvisibleObject()
 end
 --- White Screen ---
-if getgenv().Config.Another.WhiteScreen then
+if getgenv().Setting.Another.WhiteScreen then
     game.RunService:Set3dRenderingEnabled(false)
 end	
 --- Check Fruit
@@ -390,7 +391,7 @@ function hasValue(array, targetString)
     return false
 end
 --- Fast Attack
-if getgenv().Config.Click.FastClick then
+if getgenv().Setting.Click.FastClick then
     local CameraShaker = require(game.ReplicatedStorage.Util.CameraShaker)
     CameraShaker:Stop()
     fastattack = true
@@ -547,16 +548,16 @@ function target()
         p = nil
         getgenv().targ = nil
         for i, v in pairs(game.Players:GetPlayers()) do 
-            if v:FindFirstChild("Team") and v.Team ~= nil and ((tostring(lp.Team) == "Marines" and game.Players.LocalPlayer.Team ~= v.Team) or tostring(lp.Team) == "Pirates") then
-                if v and v:FindFirstChild("Data") and ((getgenv().Setting.Skip.Fruit and hasValue(getgenv().Setting.Skip.FruitList, v.Data.DevilFruit.Value) == false) or not getgenv().Setting.Skip.Fruit) then
+        if v:FindFirstChild("Team") and v.Team ~= nil and not (getgenv().Config.Hunt.Team == "Marines" and game.Players.LocalPlayer.Team ~= v.Team) or getgenv().Config.Hunt.Team == "Pirates" then
+                if v and v:FindFirstChild("Data") and ((getgenv().Config.Skip.Fruit and hasValue(getgenv().Config.Skip.FruitList, v.Data.DevilFruit.Value) == false) or not getgenv().Config.Skip.Fruit) then
                     if v ~= lp and v ~= getgenv().targ and (v.Character:FindFirstChild("HumanoidRootPart").CFrame.Position - game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame.Position).Magnitude < d and hasValue(getgenv().checked, v) == false and v.Character.HumanoidRootPart.CFrame.Y <= 12000 then
                         if (tonumber(game.Players.LocalPlayer.Data.Level.Value) - 250) < v.Data.Level.Value  then
-                            if (v.leaderstats["Bounty/Honor"].value > getgenv().Setting.Hunt.Min) or (v.leaderstats["Bounty/Honor"].value < getgenv().Setting.Hunt.Max) and not hopserver then 
-                                if (getgenv().Setting.Skip.V4 and not v.Character:FindFirstChild("RaceTransformed")) or not getgenv().Setting.Skip.V4 then
+                            if v.leaderstats["Bounty/Honor"].Value >= getgenv().Config.Hunt.Min and v.leaderstats["Bounty/Honor"].Value <= getgenv().Config.Hunt.Max and not hopserver then 
+                                if (getgenv().Config.Skip.V4 and not v.Character:FindFirstChild("RaceTransformed")) or not getgenv().Config.Skip.V4 then
                                     p = v 
                                     d = (v.Character.HumanoidRootPart.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude 
-                                    if getgenv().Setting.Chat.Enabled then
-                                        game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):FindFirstChild("SayMessageRequest"):FireServer(getgenv().Setting.Chat.List[math.random(0, #getgenv().Setting.Chat.List)], "All")
+                                    if getgenv().Config.Chat.Enabled then
+                                        game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):FindFirstChild("SayMessageRequest"):FireServer(getgenv().Config.Chat.List[math.random(0, #getgenv().Config.Chat.List)], "All")
                                     end
                                 end
                             end
@@ -578,7 +579,7 @@ spawn(function()
         end)
     end
 end)
-gunmethod = getgenv().Config.Gun.NewGunMode
+gunmethod = getgenv().Setting.Gun.NewGunMode
 local melee, gun, sword, fruit
 spawn(function()
     while task.wait() do
@@ -586,21 +587,21 @@ spawn(function()
             if getgenv().targ.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 if (getgenv().targ.Character:WaitForChild("HumanoidRootPart").CFrame.Position - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.Position).Magnitude < 40 then 
                     if not gunmethod then
-                        if getgenv().Config.Melee.Enable then
+                        if getgenv().Setting.Melee.Enable then
                             getgenv().weapon = "Melee"
-                            wait(getgenv().Config.Melee.Delay)
+                            wait(getgenv().Setting.Melee.Delay)
                         end
-                        if getgenv().Config.Fruit.Enable then
+                        if getgenv().Setting.Fruit.Enable then
                             getgenv().weapon = "Blox Fruit"
-                            wait(getgenv().Config.Fruit.Delay)
+                            wait(getgenv().Setting.Fruit.Delay)
                         end
-                        if getgenv().Config.Sword.Enable then
+                        if getgenv().Setting.Sword.Enable then
                             getgenv().weapon = "Sword"
-                            wait(getgenv().Config.Sword.Delay)
+                            wait(getgenv().Setting.Sword.Delay)
                         end
-                        if getgenv().Config.Gun.Enable then
+                        if getgenv().Setting.Gun.Enable then
                             getgenv().weapon = "Gun"
-                            wait(getgenv().Config.Gun.Delay)
+                            wait(getgenv().Setting.Gun.Delay)
                         end
                     else
                         for i, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
@@ -624,15 +625,13 @@ spawn(function()
             end
             if getgenv().targ ~= nil and getgenv().targ.Character and (getgenv().targ.Character.HumanoidRootPart.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude < 50 then
                 buso()
-                if getgenv().Config.Another.V3 then
-                    if getgenv().Config.Another.CustomHealth and lp.Character.Humanoid.Health <= getgenv().Config.Another.Health then
-                        l = 0.1
-                        down("T")
+                if getgenv().Setting.Another.V3 then
+                    if getgenv().Setting.Another.CustomHealth and lp.Character.Humanoid.Health <= getgenv().Setting.Another.Health then
+                        down("T",0.1)
                     end
                 end
-                if getgenv().Config.Another.V4 then
-                    l = 0.1
-                    down("Y")
+                if getgenv().Setting.Another.V4 then
+                    down("Y",0.1)
                 end   
             end
         end)
@@ -650,64 +649,51 @@ spawn(function()
                             equip(getgenv().weapon)
                             for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do 
                                 if v:IsA("Tool") and v.ToolTip == "Melee" then
-                                    if getgenv().Config.Melee.Enable then
-                                        if game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("Z").Cooldown.AbsoluteSize.X <= 0 and getgenv().Config.Melee.Z.Enable then	
-                                            l = getgenv().Config.Melee.Z.HoldTime
-                                            down("Z")
-                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("X").Cooldown.AbsoluteSize.X <= 0 and getgenv().Config.Melee.X.Enable then	
-                                            l = getgenv().Config.Melee.X.HoldTime
-                                            down("X")
-                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("C").Cooldown.AbsoluteSize.X <= 0 and getgenv().Config.Melee.C.Enable then	
-                                            l = getgenv().Config.Melee.C.HoldTime
-                                            down("C")
-                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("V").Cooldown.AbsoluteSize.X <= 0 and getgenv().Config.Melee.V.Enable then	
-                                            l = getgenv().Config.Melee.V.HoldTime
-                                            down("V")
+                                    if getgenv().Setting.Melee.Enable then
+                                        if game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("Z").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Melee.Z.Enable then	
+                                            down("Z",getgenv().Setting.Melee.Z.HoldTime)
+                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("X").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Melee.X.Enable then	
+                                            down("X",getgenv().Setting.Melee.X.HoldTime)
+                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("C").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Melee.C.Enable then	
+                                            down("C",getgenv().Setting.Melee.C.HoldTime)
+                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("V").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Melee.V.Enable then	
+                                            down("V",getgenv().Setting.Melee.V.HoldTime)
                                         else
                                             Click()
                                         end
                                     end
                                 elseif v:IsA("Tool") and v.ToolTip == "Gun" then
-                                    if getgenv().Config.Gun.Enable then
-                                        if game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("Z").Cooldown.AbsoluteSize.X <= 0 and getgenv().Config.Gun.Z.Enable then	
-                                            l = getgenv().Config.Gun.Z.HoldTime
-                                            down("Z")
-                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("X").Cooldown.AbsoluteSize.X <= 0 and getgenv().Config.Gun.X.Enable then	
-                                            l = getgenv().Config.Gun.X.HoldTime
-                                            down("X")
+                                    if getgenv().Setting.Gun.Enable then
+                                        if game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("Z").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Gun.Z.Enable then	
+                                            down("Z",getgenv().Setting.Gun.Z.HoldTime)
+                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("X").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Gun.X.Enable then	
+                                            down("X",getgenv().Setting.Gun.X.HoldTime)
                                         else
                                             Click()
                                         end
                                     end
                                 elseif v:IsA("Tool") and v.ToolTip == "Sword" then
-                                    if getgenv().Config.Sword.Enable then
-                                        if game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("Z").Cooldown.AbsoluteSize.X <= 0 and getgenv().Config.Sword.Z.Enable then	
-                                            l = getgenv().Config.Sword.Z.HoldTime
-                                            down("Z")
-                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("X").Cooldown.AbsoluteSize.X <= 0 and getgenv().Config.Sword.X.Enable then	
-                                            l = getgenv().Config.Sword.X.HoldTime
-                                            down("X")
+                                    if getgenv().Setting.Sword.Enable then
+                                        if game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("Z").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Sword.Z.Enable then	
+                                            down("Z",getgenv().Setting.Sword.Z.HoldTime)
+                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("X").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Sword.X.Enable then	
+                                            down("X",getgenv().Setting.Sword.X.HoldTime)
                                         else
                                             Click()
                                         end
                                     end
                                 elseif v:IsA("Tool") and v.ToolTip == "Blox Fruit" then
-                                    if getgenv().Config.Fruit.Enable then
-                                        if game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("Z").Cooldown.AbsoluteSize.X <= 0 and getgenv().Config.Fruit.Z.Enable then	
-                                            l = getgenv().Config.Fruit.Z.HoldTime
-                                            down("Z")
-                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("X").Cooldown.AbsoluteSize.X <= 0 and getgenv().Config.Fruit.X.Enable then	
-                                            l = getgenv().Config.Fruit.X.HoldTime
-                                            down("X")
-                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("C").Cooldown.AbsoluteSize.X <= 0 and getgenv().Config.Fruit.C.Enable then	
-                                            l = getgenv().Config.Fruit.C.HoldTime
-                                            down("C")
-                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("V").Cooldown.AbsoluteSize.X <= 0 and getgenv().Config.Fruit.V.Enable then	
-                                            l = getgenv().Config.Fruit.V.HoldTime
-                                            down("V")
-                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("F").Cooldown.AbsoluteSize.X <= 0 and getgenv().Config.Fruit.F.Enable then	
-                                            l = getgenv().Config.Fruit.F.HoldTime
-                                            down("F")
+                                    if getgenv().Setting.Fruit.Enable then
+                                        if game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("Z").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Fruit.Z.Enable then	
+                                            down("Z",getgenv().Setting.Fruit.Z.HoldTime)
+                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("X").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Fruit.X.Enable then	
+                                            down("X",getgenv().Setting.Fruit.X.HoldTime)
+                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("C").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Fruit.C.Enable then	
+                                            down("C",getgenv().Setting.Fruit.C.HoldTime)
+                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("V").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Fruit.V.Enable then	
+                                            down("V",getgenv().Setting.Fruit.V.HoldTime)
+                                        elseif game.Players.LocalPlayer.PlayerGui.Main.Skills[v.Name]:FindFirstChild("F").Cooldown.AbsoluteSize.X <= 0 and getgenv().Setting.Fruit.F.Enable then	
+                                            down("F",getgenv().Setting.Fruit.F.HoldTime)
                                         else
                                             Click()
                                         end
@@ -715,19 +701,15 @@ spawn(function()
                                 end
                             end
                         else
-                            if getgenv().Config.Melee.Enable then
-                                if getgenv().Config.Melee.Z.Enable then	
-                                    l = getgenv().Config.Melee.Z.HoldTime
-                                    down("Z")
-                                elseif  getgenv().Config.Melee.X.Enable then	
-                                    l = getgenv().Config.Melee.X.HoldTime
-                                    down("X")
-                                elseif getgenv().Config.Melee.C.Enable then	
-                                    l = getgenv().Config.Melee.C.HoldTime
-                                    down("C")
-                                elseif getgenv().Config.Melee.V.Enable then	
-                                    l = getgenv().Config.Melee.V.HoldTime
-                                    down("V")
+                            if getgenv().Setting.Melee.Enable then
+                                if getgenv().Setting.Melee.Z.Enable then	
+                                    down("Z",getgenv().Setting.Melee.Z.HoldTime)
+                                elseif  getgenv().Setting.Melee.X.Enable then	
+                                    down("X",getgenv().Setting.Melee.X.HoldTime)
+                                elseif getgenv().Setting.Melee.C.Enable then	
+                                    down("C",getgenv().Setting.Melee.C.HoldTime)
+                                elseif getgenv().Setting.Melee.V.Enable then	
+                                    down("V",getgenv().Setting.Melee.V.HoldTime)
                                 end
                             end
                             Click()
@@ -753,7 +735,7 @@ spawn(function()
         if getgenv().targ == nil then hopserver = true end 
         pcall(function()
             if getgenv().targ.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid").Health > getgenv().Config.SafeHealth.Health then
+                if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid").Health > getgenv().Setting.SafeHealth.Health then
                     pcall(function()    
                         if not (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") and getgenv().targ:DistanceFromCharacter(game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").Position) < 10000) then
                             if (getgenv().targ.Character:WaitForChild("HumanoidRootPart").CFrame.Position - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.Position).Magnitude < 40 then 
@@ -762,7 +744,7 @@ spawn(function()
                                     SkipPlayer()
                                 end
                                 if getgenv().targ.Character.Humanoid.Health > 0 then
-                                    if getgenv().Config.Click.AlwaysClick then
+                                    if getgenv().Setting.Click.AlwaysClick then
                                         Click()
                                     end
                                     if helloae then
@@ -793,14 +775,14 @@ spawn(function()
                     if a ~= b then
                         yTween = 0
                         b = a
-                        if (getgenv().Config.Gun.Enable and getgenv().Config.Gun.GunMode) then
+                        if (getgenv().Setting.Gun.Enable and getgenv().Setting.Gun.GunMode) then
                             Nguvc = -14
                         else
                             Nguvc = -15
                         end
                     else
                         yTween = 5
-                        if (getgenv().Config.Gun.Enable and getgenv().Config.Gun.GunMode) then
+                        if (getgenv().Setting.Gun.Enable and getgenv().Setting.Gun.GunMode) then
                             Nguvc = 3
                         else
                             Nguvc = 5
@@ -824,7 +806,7 @@ spawn(function()
     while task.wait() do 
         if getgenv().targ ~= nil and (getgenv().targ.Character:WaitForChild("HumanoidRootPart").CFrame.Position - game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame.Position).Magnitude < 40 then 
             aim = true 
-            if (getgenv().Config.Gun.Enable and getgenv().Config.Gun.GunMode) then
+            if (getgenv().Setting.Gun.Enable and getgenv().Setting.Gun.GunMode) then
                 CFrameHunt = CFrame.new(getgenv().targ.Character.HumanoidRootPart.Position + getgenv().targ.Character.HumanoidRootPart.CFrame.LookVector * 2, getgenv().targ.Character.HumanoidRootPart.Position)
             else
                 CFrameHunt = CFrame.new(getgenv().targ.Character.HumanoidRootPart.Position + getgenv().targ.Character.HumanoidRootPart.CFrame.LookVector * 5, getgenv().targ.Character.HumanoidRootPart.Position)
@@ -868,7 +850,7 @@ Mouse.Button1Down:Connect(function()
 end)
 spawn(function()
     while task.wait() do
-        if getgenv().Config.Another.LockCamera then
+        if getgenv().Setting.Another.LockCamera then
             local targetPlayer = getgenv().targ
             if targetPlayer ~= nil then
                 local targetCharacter = targetPlayer.Character
@@ -886,12 +868,12 @@ end)
 --  Rejoin
 game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child)
     if not hopserver and child.Name == 'ErrorPrompt' and child:FindFirstChild('MessageArea') and child.MessageArea:FindFirstChild("ErrorFrame") then
-        print("MTriet Hub Auto Bounty | Rejoin!")
+        print("Rimus Hub Auto Bounty | Rejoin!")
         game:GetService("TeleportService"):Teleport(game.PlaceId)
     end
 end)
 --- Webhook
-Urlsent = getgenv().Config.Hunt.Url
+Urlsent = getgenv().Setting.Hunt.Url
 function wSend(main)
     spawn(function()
         local Data = game:GetService("HttpService"):JSONEncode(main)
@@ -903,12 +885,12 @@ function wSend(main)
     end)
 end 
 function wEarn(targ, earn,total) 
-    if getgenv().Config.Hunt.Webhook and getgenv().killed ~= nil then
+    if getgenv().Setting.Hunt.Webhook and getgenv().killed ~= nil then
         local data = {
             ["content"] = "",
             ["embeds"] = {
                 {
-                    ["title"] = "**Auto Bounty**",
+                    ["title"] = "**Rimus Hub | Auto Bounty**",
                     ["color"] = 00000,
                     ["fields"] = {
                         {
@@ -922,7 +904,7 @@ function wEarn(targ, earn,total)
                             ["inline"] = false,
                         },
                         {
-                            ["name"] = "Earned From Target: ",
+                            ["name"] = "Server Bounty Count: ",
                             ["value"] = "```Earned: "..earn.."```",
                             ["inline"] = false,
                         },
@@ -952,7 +934,7 @@ function wEarn(targ, earn,total)
 end
 --- Counter
 --- Load & Save Setting
-local foldername = "Mtriet Hub Auto Bounty"
+local foldername = "Rimus Hub Auto Bounty"
 local filename = foldername.."/Settings.json"
 function saveSettings()
     local HttpService = game:GetService("HttpService")
@@ -977,16 +959,6 @@ function loadSettings()
         end
     end
 end
-_G.TotalEarn = 0
-_G.Time = 0
-loadSettings()
-Bounty = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value
-Cac = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value
-Earned = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value - Bounty
-Earned2 = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value - Bounty
-startTime = tick() - _G.Time
-OldTotalEarned = _G.TotalEarn 
-TotalEarned = _G.TotalEarn 
 --- Gui
 RimusScreen = Instance.new("ScreenGui");
 DropShadowHolder = Instance.new("Frame");
@@ -1388,6 +1360,15 @@ NameHub.Size = UDim2.new(0, 246, 0, 20)
 NameHub.Name = "NameHub"
 NameHub.Parent = Top
 --- Gui Function
+_G.TotalEarn = 0
+_G.Time = 0
+loadSettings()
+Bounty = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value
+Earned = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value - Bounty
+Earned2 = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value - Bounty
+startTime = tick() - _G.Time
+OldTotalEarned = _G.TotalEarn 
+TotalEarned = _G.TotalEarn 
 function GetElapsedTime(startTime)
     local elapsedTime = tick() - startTime
     local hours = math.floor(elapsedTime / 3600)
@@ -1397,7 +1378,72 @@ function GetElapsedTime(startTime)
     local formattedTime = string.format("%02d:%02d:%02d", hours, minutes, seconds)
     return formattedTime
 end
-DropShadowHolder.Draggable = true
+local UserInputService = game:GetService("UserInputService")
+local UserInputService = game:GetService("UserInputService")
+local VirtualInputManager = game:GetService("VirtualInputManager")
+local TweenService = game:GetService("TweenService")
+local tween = game:service"TweenService"
+local RunService = game:GetService("RunService")
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local Mouse = LocalPlayer:GetMouse()
+local GuiService = game:GetService("GuiService")
+function MakeDraggable(topbarobject, object)
+    local Dragging = nil
+    local DragInput = nil
+    local DragStart = nil
+    local StartPosition = nil
+
+    local function Update(input)
+        local Delta = input.Position - DragStart
+        local pos =
+            UDim2.new(
+                StartPosition.X.Scale,
+                StartPosition.X.Offset + Delta.X,
+                StartPosition.Y.Scale,
+                StartPosition.Y.Offset + Delta.Y
+            )
+        local Tween = TweenService:Create(object, TweenInfo.new(0.2), {Position = pos})
+        Tween:Play()
+    end
+
+    topbarobject.InputBegan:Connect(
+        function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                Dragging = true
+                DragStart = input.Position
+                StartPosition = object.Position
+
+                input.Changed:Connect(
+                    function()
+                        if input.UserInputState == Enum.UserInputState.End then
+                            Dragging = false
+                        end
+                    end
+                )
+            end
+        end
+    )
+
+    topbarobject.InputChanged:Connect(
+        function(input)
+            if
+                input.UserInputType == Enum.UserInputType.MouseMovement or
+                input.UserInputType == Enum.UserInputType.Touch
+            then
+                DragInput = input
+            end
+        end
+    )
+
+    UserInputService.InputChanged:Connect(
+        function(input)
+            if input == DragInput and Dragging then
+                Update(input)
+            end
+        end
+    )
+end
+MakeDraggable(DropShadowHolder,DropShadowHolder)
 DisButton.MouseButton1Down:Connect(function()
     setclipboard("https://discord.gg/ugF7s4GZ53")
 end)
@@ -1417,15 +1463,12 @@ spawn(function()
         Earned = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value - Bounty
         if Earned ~= Earned2 then
             TotalEarned = OldTotalEarned + Earned
-            Cac2 = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value - Cac
-            wait(0.1)
-            Cac = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value
             Earned2 = Earned
             saveSettings()
-            wEarn(getgenv().killed, Cac2,TotalEarned)  
+            wEarn(getgenv().killed, Earned,TotalEarned)  
         end
-        EarnedNumber.Text = Earned
-        TotalEarnedNumber.Text = TotalEarned
+        EarnedNumber.Text = tostring(Earned)
+        TotalEarnedNumber.Text = tostring(TotalEarned)
         CurrentBountyNumber.Text = game:GetService("Players").LocalPlayer.leaderstats["Bounty/Honor"].value
         _G.TotalEarn = TotalEarned 
     end
