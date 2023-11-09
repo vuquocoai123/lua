@@ -1,4 +1,4 @@
-getgenv().Settings = {
+getgenv().Setting = {
     ["Hunt"] = {
         ["Team"] = "Pirates",
         ["Min"] = 0,
@@ -548,16 +548,16 @@ function target()
         p = nil
         getgenv().targ = nil
         for i, v in pairs(game.Players:GetPlayers()) do 
-        if v:FindFirstChild("Team") and v.Team ~= nil and not (getgenv().Settings.Hunt.Team == "Marines" and game.Players.LocalPlayer.Team ~= v.Team) or getgenv().Settings.Hunt.Team == "Pirates" then
-                if v and v:FindFirstChild("Data") and ((getgenv().Settings.Skip.Fruit and hasValue(getgenv().Settings.Skip.FruitList, v.Data.DevilFruit.Value) == false) or not getgenv().Settings.Skip.Fruit) then
+        if v:FindFirstChild("Team") and v.Team ~= nil and not (getgenv().Setting.Hunt.Team == "Marines" and game.Players.LocalPlayer.Team ~= v.Team) or getgenv().Setting.Hunt.Team == "Pirates" then
+                if v and v:FindFirstChild("Data") and ((getgenv().Setting.Skip.Fruit and hasValue(getgenv().Setting.Skip.FruitList, v.Data.DevilFruit.Value) == false) or not getgenv().Setting.Skip.Fruit) then
                     if v ~= lp and v ~= getgenv().targ and (v.Character:FindFirstChild("HumanoidRootPart").CFrame.Position - game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame.Position).Magnitude < d and hasValue(getgenv().checked, v) == false and v.Character.HumanoidRootPart.CFrame.Y <= 12000 then
                         if (tonumber(game.Players.LocalPlayer.Data.Level.Value) - 250) < v.Data.Level.Value  then
-                            if v.leaderstats["Bounty/Honor"].Value >= getgenv().Settings.Hunt.Min and v.leaderstats["Bounty/Honor"].Value <= getgenv().Settings.Hunt.Max and not hopserver then 
-                                if (getgenv().Settings.Skip.V4 and not v.Character:FindFirstChild("RaceTransformed")) or not getgenv().Settings.Skip.V4 then
+                            if v.leaderstats["Bounty/Honor"].Value >= getgenv().Setting.Hunt.Min and v.leaderstats["Bounty/Honor"].Value <= getgenv().Setting.Hunt.Max and not hopserver then 
+                                if (getgenv().Setting.Skip.V4 and not v.Character:FindFirstChild("RaceTransformed")) or not getgenv().Setting.Skip.V4 then
                                     p = v 
                                     d = (v.Character.HumanoidRootPart.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Position).Magnitude 
-                                    if getgenv().Settings.Chat.Enabled then
-                                        game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):FindFirstChild("SayMessageRequest"):FireServer(getgenv().Settings.Chat.List[math.random(0, #getgenv().Settings.Chat.List)], "All")
+                                    if getgenv().Setting.Chat.Enabled then
+                                        game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):FindFirstChild("SayMessageRequest"):FireServer(getgenv().Setting.Chat.List[math.random(0, #getgenv().Setting.Chat.List)], "All")
                                     end
                                 end
                             end
