@@ -9,7 +9,7 @@ getgenv().Setting = {
     },
     ["Webhook"] = {
         ["Enabled"] = false, -- set true/halse
-        ["Url"] = "Yourlink webhook"
+        ["Url"] = "Your link webhook"
     },
     ["Skip"] = {
         ["V4"] = true,
