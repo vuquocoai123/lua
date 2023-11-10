@@ -1,7 +1,7 @@
 -- Because this is a beta version, there are still many errors, so if you have any suggestions, please go to our discord
 -- Vì đây là phiên bản beta nên còn nhiều lỗi nên nếu có góp ý gì hãy vào Discord của chúng tôi 
 -- Discord Rimus Hub : https://discord.com/invite/FZzxtjgjte
-getgenv().Config = {
+getgenv().Setting = {
     ["Hunt"] = {
         ["Team"] = "Pirates",
         ["Min"] = 0,
