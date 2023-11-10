@@ -6,8 +6,10 @@ getgenv().Setting = {
         ["Team"] = "Pirates",
         ["Min"] = 0,
         ["Max"] = 30000000,
-        ["Webhook"] = false, -- set true/false
-        ["Url"] = "you link webhook" -- paste you link webhook discord
+    },
+    ["Webhook"] = {
+        ["Enabled"] = false, -- set true/halse
+        ["Url"] = "Yourlink webhook"
     },
     ["Skip"] = {
         ["V4"] = true,
@@ -24,7 +26,7 @@ getgenv().Setting = {
         ["List"] = {""},
     },
     ["Click"] = {
-        ["AlwaysClick"] = false,
+        ["AlwaysClick"] = true,
         ["FastClick"] = false
     },
     ["Another"] = {
@@ -44,7 +46,7 @@ getgenv().Setting = {
     ["Melee"] = {
         ["Enable"] = true,
         ["Delay"] = 2.5,
-        ["Z"] = {["Enable"] = true, ["HoldTime"] = 0},
+        ["Z"] = {["Enable"] = true, ["HoldTime"] = 1.25},
         ["X"] = {["Enable"] = true, ["HoldTime"] = 0},
         ["C"] = {["Enable"] = true, ["HoldTime"] = 0},
         ["V"] = {["Enable"] = false, ["HoldTime"] = 0}
@@ -59,13 +61,13 @@ getgenv().Setting = {
         ["F"] = {["Enable"] = false, ["HoldTime"] = 0}
     },
     ["Sword"] = {
-        ["Enable"] = false,
+        ["Enable"] = true,
         ["Delay"] = 1,
         ["Z"] = {["Enable"] = true, ["HoldTime"] = 0},
         ["X"] = {["Enable"] = true, ["HoldTime"] = 0}
     },
     ["Gun"] = {
-        ["Enable"] = false,
+        ["Enable"] = true,
         ["GunMode"] = false, 
         ["Delay"] = 1.75,
         ["Z"] = {["Enable"] = true, ["HoldTime"] = 0},
