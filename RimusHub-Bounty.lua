@@ -6,7 +6,7 @@ getgenv().Setting = {
         ["Team"] = "Pirates",
         ["Min"] = 0,
         ["Max"] = 30000000,
-        ["Webhook"] = true, 
+        ["Webhook"] = false, -- set true/false
         ["Url"] = "you link webhook" -- paste you link webhook discord
     },
     ["Skip"] = {
