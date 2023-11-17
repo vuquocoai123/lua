@@ -128,13 +128,13 @@ function Update:Window(text,logo,keybind)
 	local yoo = string.gsub(tostring(keybind),"Enum.KeyCode.","")
 	
 	local PADOXHUB = Instance.new("ScreenGui")
-	PADOXHUB.Name = "ZEN HUB By King's Hub"
-	PADOXHUB.Parent = game.CoreGui
+	AFXCAXIHUB.Name = "AFXCAXI HUB"
+	AFXCAXIHUB.Parent = game.CoreGui
 	PADOXHUB.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 	local Main = Instance.new("Frame")
 	Main.Name = "Main"
-	Main.Parent = PADOXHUB
+	Main.Parent = AFXCAXIHUB
 	Main.ClipsDescendants = true
 	Main.AnchorPoint = Vector2.new(0.5,0.5)
 	Main.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
